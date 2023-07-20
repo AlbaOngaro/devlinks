@@ -8,16 +8,24 @@ import { Input } from "components/Input/Input";
 import { Button } from "components/Button/Button";
 
 import * as styles from "./LoginPage.styles";
+import { supabase } from "lib/supabase";
+import { useRouter } from "next/router";
 
 export function LoginPage() {
+  const router = useRouter();
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.debug(credentials);
+    const { error } = await supabase.auth.signInWithPassword(credentials);
+
+    if (!error) {
+      router.push("/");
+    }
   };
 
   return (

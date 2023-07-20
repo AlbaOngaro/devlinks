@@ -8,17 +8,25 @@ import { Card } from "components/Card/Card";
 import { Input } from "components/Input/Input";
 
 import * as styles from "./RegisterPage.styles";
+import { supabase } from "lib/supabase";
+import { useRouter } from "next/router";
 
 export function RegisterPage() {
+  const router = useRouter();
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
     repeatPassword: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.debug(credentials);
+    const { error } = await supabase.auth.signUp(credentials);
+
+    if (!error) {
+      router.push("/");
+    }
   };
 
   return (
