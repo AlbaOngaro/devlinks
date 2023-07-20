@@ -11,6 +11,7 @@ export const globalStyles = (theme: Theme) => css`
   body {
     margin: 0;
     font-family: "Instrument Sans", sans-serif;
+    background-color: ${theme.colors.lightGray};
   }
 
   input,
@@ -26,6 +27,7 @@ export const globalStyles = (theme: Theme) => css`
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
+    margin: 0 0 8px;
   }
 
   h6 {
@@ -36,12 +38,19 @@ export const globalStyles = (theme: Theme) => css`
     line-height: 150%;
   }
 
-  p {
+  p,
+  a {
     color: ${theme.colors.darkGray};
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
+    margin: 0;
+  }
+
+  a {
+    color: ${theme.colors.purple};
+    text-decoration: none;
   }
 
   small {
@@ -50,5 +59,6 @@ export const globalStyles = (theme: Theme) => css`
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
+    margin: 0;
   }
 `;

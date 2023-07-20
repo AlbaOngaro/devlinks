@@ -19,13 +19,7 @@ interface Props
   validations?: Partial<Record<ValidityMatcher, string>>;
 }
 
-export function Input({
-  label,
-  placeholder,
-  icon,
-  validations,
-  ...rest
-}: Props) {
+export function Input({ label, icon, validations, ...rest }: Props) {
   return (
     <Field css={styles.field} name="email">
       {label && <Label css={styles.label}>{label}</Label>}
