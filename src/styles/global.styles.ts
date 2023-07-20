@@ -13,6 +13,13 @@ export const globalStyles = (theme: Theme) => css`
     font-family: "Instrument Sans", sans-serif;
   }
 
+  input,
+  textarea,
+  button {
+    all: unset;
+    box-sizing: border-box;
+  }
+
   h1 {
     color: ${theme.colors.darkGray};
     font-size: 32px;

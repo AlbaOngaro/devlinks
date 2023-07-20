@@ -1,7 +1,13 @@
 import { Select } from "components/Select/Select";
 
 import * as styles from "./StyleGuidePage.styles";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import {
+  EnvelopeClosedIcon,
+  GitHubLogoIcon,
+  Link1Icon,
+} from "@radix-ui/react-icons";
+import { Root } from "@radix-ui/react-form";
+import { Input } from "components/Input/Input";
 
 export function StyleGuidePage() {
   return (
@@ -25,6 +31,19 @@ export function StyleGuidePage() {
           ]}
         />
       </article>
+
+      <Root>
+        <Input
+          placeholder="Demo"
+          icon={<EnvelopeClosedIcon />}
+          type="email"
+          required
+          validations={{
+            valueMissing: "Please check again",
+            typeMismatch: "Please provide a valid email",
+          }}
+        />
+      </Root>
     </section>
   );
 }
