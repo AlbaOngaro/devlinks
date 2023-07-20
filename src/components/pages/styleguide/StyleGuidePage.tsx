@@ -8,6 +8,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Root } from "@radix-ui/react-form";
 import { Input } from "components/Input/Input";
+import { Button } from "components/Button/Button";
 
 export function StyleGuidePage() {
   return (
@@ -44,6 +45,11 @@ export function StyleGuidePage() {
           }}
         />
       </Root>
+
+      <article>
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+      </article>
     </section>
   );
 }
