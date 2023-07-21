@@ -2,24 +2,7 @@ import { Card } from "components/Card/Card";
 
 import * as styles from "./PreviewCard.styles";
 import { PreviewLink } from "components/PreviewLink/PreviewLink";
-import { Service } from "components/PreviewLink/types";
-
-const SERVICES: Service[] = [
-  "github",
-  "frontend-mentor",
-  "twitter",
-  "linkedin",
-  "youtube",
-  "facebook",
-  "twitch",
-  "devto",
-  "codewars",
-  "codepen",
-  "freecodecamp",
-  "gitlab",
-  "hashnode",
-  "stack-overflow",
-];
+import { useLinksContext } from "components/pages/home/HomePage";
 
 export function PreviewCard() {
   const user = {
@@ -29,11 +12,7 @@ export function PreviewCard() {
       "https://lh3.googleusercontent.com/ogw/AGvuzYbKc9vlR4BYVfv_US_wAFo82pr0vNUfIq_xWZ8wzQ=s64-c-mo",
   };
 
-  const links = SERVICES.map((service) => ({
-    type: service,
-    label: `${service.charAt(0).toUpperCase()}${service.slice(1)}`,
-    link: "#",
-  }));
+  const { links } = useLinksContext();
 
   return (
     <Card css={styles.card}>

@@ -1,8 +1,8 @@
 import { Theme, css } from "@emotion/react";
 
-import { Service } from "./types";
+import { Platform } from "./types";
 
-export const link = (theme: Theme, type: Service) => [
+export const link = (theme: Theme, type: Platform) => [
   css`
     width: 100%;
     padding: 12px 16px;

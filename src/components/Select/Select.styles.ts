@@ -1,5 +1,15 @@
 import { Theme, css } from "@emotion/react";
 
+import { label as labelBase } from "components/Input/Input.styles";
+
+export const container = css`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const label = labelBase;
+
 export const trigger = (theme: Theme) => css`
   width: 100%;
   display: flex;

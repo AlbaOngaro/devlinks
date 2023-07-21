@@ -1,26 +1,49 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactElement, ReactNode } from "react";
 import * as RUISelect from "@radix-ui/react-select";
 import { CaretDownIcon, Link1Icon } from "@radix-ui/react-icons";
 
 import * as styles from "./Select.styles";
 
-interface Option {
+export interface Option<T> {
   label: ReactNode;
-  value: string;
+  value: T;
 }
 
-interface Props {
+interface Props<T> {
   placeholder?: string;
-  options: Option[];
+  options: Option<T>[];
+  icon?: ReactElement;
+  label?: string;
+  defaultOption?: Option<T>;
+  onChange: (option: Option<T>) => void;
 }
 
-export function Select({ options, placeholder }: Props) {
+export function Select<T extends string>({
+  options,
+  placeholder,
+  icon,
+  label,
+  defaultOption,
+  onChange,
+}: Props<T>) {
   return (
-    <RUISelect.Root>
+    <RUISelect.Root
+      css={styles.container}
+      defaultValue={defaultOption?.value}
+      onValueChange={(value) => {
+        const option = options.find((option) => option.value === value);
+        if (option) {
+          onChange(option);
+        }
+      }}
+    >
+      {label && <label css={styles.label}>{label}</label>}
       <RUISelect.Trigger css={styles.trigger}>
-        <RUISelect.Icon css={(theme) => styles.icon(theme, false)}>
-          <Link1Icon />
-        </RUISelect.Icon>
+        {icon && (
+          <RUISelect.Icon css={(theme) => styles.icon(theme, false)}>
+            {icon}
+          </RUISelect.Icon>
+        )}
         <RUISelect.Value placeholder={placeholder} />
         <RUISelect.Icon css={(theme) => styles.icon(theme, true)}>
           <CaretDownIcon />

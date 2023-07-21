@@ -19,6 +19,7 @@ export const content = (theme: Theme) => css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const item = (theme: Theme, fullHeight: boolean) => css`
@@ -30,6 +31,7 @@ export const item = (theme: Theme, fullHeight: boolean) => css`
   justify-content: center;
   align-items: center;
   height: ${fullHeight ? "100%" : "auto"};
+  width: 100%;
 `;
 
 export const emptyTitle = css`
