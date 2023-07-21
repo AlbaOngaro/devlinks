@@ -15,7 +15,7 @@ export const phone = css`
   background-size: contain;
   background-position: center;
   width: min(100%, 307px);
-  height: 100%;
+  height: min(100%, 631px);
 `;
 
 export const header = css`
@@ -70,8 +70,16 @@ export const email = (theme: Theme) => css`
   }
 `;
 
+export const wrapper = css`
+  height: 340px;
+  overflow: scroll;
+`;
+
 export const links = css`
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 `;

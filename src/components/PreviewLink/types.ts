@@ -22,7 +22,7 @@ export type Service =
   | "youtube"
   | "facebook"
   | "twitch"
-  | "dev.to"
+  | "devto"
   | "codewars"
   | "codepen"
   | "freecodecamp"
