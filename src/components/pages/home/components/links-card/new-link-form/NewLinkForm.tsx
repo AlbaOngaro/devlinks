@@ -9,11 +9,6 @@ import Image from "next/image";
 import { css } from "@emotion/react";
 import { Link1Icon } from "@radix-ui/react-icons";
 
-interface Props {
-  link: Link;
-  index: number;
-}
-
 const PLATFORMS = [
   { value: "github", label: "Github" },
   { value: "frontend-mentor", label: "Frontend Mentor" },
@@ -51,15 +46,17 @@ const PLATFORMS = [
   ),
 }));
 
-export function NewLinkForm({ link, index }: Props) {
+export function NewLinkForm({ id, url }: Link) {
   const { setLinks } = useLinksContext();
 
   return (
     <article css={styles.item}>
       <header css={styles.header}>
-        <h6>Link #{index + 1}</h6>
+        <h6>Link #{id}</h6>
         <button
-          onClick={() => setLinks((curr) => curr.filter((_, i) => i !== index))}
+          onClick={() =>
+            setLinks((curr) => curr.filter((link) => link.id !== id))
+          }
         >
           Remove
         </button>
@@ -71,15 +68,15 @@ export function NewLinkForm({ link, index }: Props) {
           options={PLATFORMS}
           onChange={(option) =>
             setLinks((curr) =>
-              curr.map((l, i) => {
-                if (i === index) {
+              curr.map((link) => {
+                if (link.id === id) {
                   return {
-                    ...l,
+                    ...link,
                     type: option.value as Platform,
                   };
                 }
 
-                return l;
+                return link;
               }),
             )
           }
@@ -88,18 +85,18 @@ export function NewLinkForm({ link, index }: Props) {
           icon={<Link1Icon />}
           type="url"
           label="Link"
-          value={link.url}
+          value={url}
           onChange={(e) =>
             setLinks((curr) =>
-              curr.map((l, i) => {
-                if (i === index) {
+              curr.map((link) => {
+                if (link.id === id) {
                   return {
-                    ...l,
+                    ...link,
                     url: e.target.value,
                   };
                 }
 
-                return l;
+                return link;
               }),
             )
           }

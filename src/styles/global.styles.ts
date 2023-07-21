@@ -12,6 +12,7 @@ export const globalStyles = (theme: Theme) => css`
     margin: 0;
     font-family: "Instrument Sans", sans-serif;
     background-color: ${theme.colors.lightGray};
+    overflow: hidden;
   }
 
   input,

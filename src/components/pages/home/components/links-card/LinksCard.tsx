@@ -42,11 +42,15 @@ export function LinksCard() {
         </Button>
       </header>
 
-      <section css={styles.content}>
+      <section css={(theme) => styles.content(theme, links.length === 0)}>
         {links.length === 0 ? (
           <EmptyState />
         ) : (
-          links.map((link, i) => <NewLinkForm link={link} index={i} key={i} />)
+          <div css={styles.linksWrapper}>
+            {links.map((link, i) => (
+              <NewLinkForm key={link.id} {...link} />
+            ))}
+          </div>
         )}
       </section>
 

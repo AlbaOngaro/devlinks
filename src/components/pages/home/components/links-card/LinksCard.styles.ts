@@ -12,12 +12,12 @@ export const header = css`
     margin: 40px 0 0;
   }
 `;
-export const content = (theme: Theme) => css`
+export const content = (theme: Theme, isEmpty: boolean) => css`
   padding: 0 40px 40px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${isEmpty ? "center" : "flex-start"};
   align-items: center;
   width: 100%;
 `;
@@ -32,6 +32,15 @@ export const item = (theme: Theme, fullHeight: boolean) => css`
   align-items: center;
   height: ${fullHeight ? "100%" : "auto"};
   width: 100%;
+`;
+
+export const linksWrapper = css`
+  height: 350px;
+  width: 100%;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 `;
 
 export const emptyTitle = css`

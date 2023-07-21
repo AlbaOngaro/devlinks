@@ -29,7 +29,7 @@ export function PreviewCard() {
           <div css={styles.wrapper}>
             <ul css={styles.links}>
               {links.map((link) => (
-                <li key={link.type}>
+                <li key={link.id}>
                   <PreviewLink link={link} />
                 </li>
               ))}
