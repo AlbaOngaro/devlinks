@@ -1,0 +1,31 @@
+// export type Service =
+//   | "GitHub"
+//   | "Frontend Mentor"
+//   | "Twitter"
+//   | "LinkedIn"
+//   | "YouTube"
+//   | "Facebook"
+//   | "Twitch"
+//   | "Dev.to"
+//   | "Codewars"
+//   | "Codepen"
+//   | "freeCodeCamp"
+//   | "GitLab"
+//   | "Hashnode"
+//   | "Stack Overflow";
+
+export type Service =
+  | "github"
+  | "frontend-mentor"
+  | "twitter"
+  | "linkedin"
+  | "youtube"
+  | "facebook"
+  | "twitch"
+  | "dev.to"
+  | "codewars"
+  | "codepen"
+  | "freecodecamp"
+  | "gitlab"
+  | "hashnode"
+  | "stack-overflow";

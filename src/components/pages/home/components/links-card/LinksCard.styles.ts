@@ -4,7 +4,7 @@ export const container = css`
   padding: 0;
 `;
 export const header = css`
-  padding: 40px;
+  padding: 40px 40px 24px;
   width: 100%;
 
   & button {
@@ -13,27 +13,35 @@ export const header = css`
   }
 `;
 export const content = (theme: Theme) => css`
-  width: calc(100% - 80px);
-  padding: 20px;
+  padding: 0 40px 40px;
   height: 100%;
-  margin: 0 40px 40px;
-  background: ${theme.colors.lightGray};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const item = (theme: Theme, fullHeight: boolean) => css`
+  background-color: ${theme.colors.lightGray};
+  padding: 20px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  & * {
-    text-align: center;
-    width: min(100%, 488px);
-  }
-
-  & img {
-    width: min(100%, 200px);
-    height: 100%;
-  }
+  height: ${fullHeight ? "100%" : "auto"};
 `;
+
+export const emptyTitle = css`
+  margin: 40px 0 24px;
+  text-align: center;
+`;
+
+export const emptyBody = css`
+  text-align: center;
+  width: min(100%, 488px);
+`;
+
 export const image = css`
   position: relative;
   width: 100%;

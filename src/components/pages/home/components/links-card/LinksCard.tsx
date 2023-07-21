@@ -3,9 +3,9 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "components/Button/Button";
 import { Card } from "components/Card/Card";
 
-import * as styles from "./LinksForm.styles";
+import * as styles from "./LinksCard.styles";
 
-export function LinksForm() {
+export function LinksCard() {
   return (
     <Card css={styles.container}>
       <header css={styles.header}>
@@ -20,18 +20,20 @@ export function LinksForm() {
       </header>
 
       <section css={styles.content}>
-        <Image
-          src="/images/illustration-empty.svg"
-          width={250}
-          height={130}
-          alt="empty"
-        />
-        <h1>Let’s get you started</h1>
-        <p>
-          Use the “Add new link” button to get started. Once you have more than
-          one link, you can reorder and edit them. We’re here to help you share
-          your profiles with everyone!
-        </p>
+        <article css={(theme) => styles.item(theme, true)}>
+          <Image
+            src="/images/illustration-empty.svg"
+            width={250}
+            height={130}
+            alt="empty"
+          />
+          <h1 css={styles.emptyTitle}>Let’s get you started</h1>
+          <p css={styles.emptyBody}>
+            Use the “Add new link” button to get started. Once you have more
+            than one link, you can reorder and edit them. We’re here to help you
+            share your profiles with everyone!
+          </p>
+        </article>
       </section>
 
       <footer css={styles.footer}>

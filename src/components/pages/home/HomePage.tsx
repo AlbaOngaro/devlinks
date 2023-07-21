@@ -2,14 +2,14 @@ import { ReactElement } from "react";
 
 import { DefaultLayout } from "layouts/default/DefaultLayout";
 
-import { LinksForm } from "./components/links-form/LinksForm";
+import { LinksCard } from "./components/links-card/LinksCard";
 import { PreviewCard } from "./components/preview-card/PreviewCard";
 
 export function HomePage() {
   return (
     <>
       <PreviewCard />
-      <LinksForm />
+      <LinksCard />
     </>
   );
 }
