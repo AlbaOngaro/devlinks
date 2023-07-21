@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "components/Button/Button";
 
 import * as styles from "./Header.styles";
+import { supabase } from "lib/supabase";
 
 export function Header() {
   return (
@@ -13,7 +14,11 @@ export function Header() {
         alt="logo"
       />
 
-      <Button css={styles.preview} variant="secondary">
+      <Button
+        css={styles.preview}
+        variant="secondary"
+        onClick={() => supabase.auth.signOut()}
+      >
         Preview
       </Button>
     </header>
