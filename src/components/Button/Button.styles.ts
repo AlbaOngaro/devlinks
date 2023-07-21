@@ -4,9 +4,9 @@ export const button = (theme: Theme, variant: "primary" | "secondary") => [
   css`
     appearance: none;
     display: flex;
-    padding: 11px 27px;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+    padding: 11px 27px;
     align-items: center;
     gap: 8px;
     border-radius: 8px;

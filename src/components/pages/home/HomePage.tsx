@@ -1,9 +1,19 @@
-import * as styles from "./HomePage.styles";
+import { ReactElement } from "react";
+
+import { DefaultLayout } from "layouts/default/DefaultLayout";
+
+import { LinksForm } from "./components/links-form/LinksForm";
+import { PreviewCard } from "./components/preview-card/PreviewCard";
 
 export function HomePage() {
   return (
-    <section>
-      <h1 css={styles.heading}>Home Page!</h1>;
-    </section>
+    <>
+      <PreviewCard />
+      <LinksForm />
+    </>
   );
 }
+
+HomePage.getLayout = (page: ReactElement) => (
+  <DefaultLayout>{page}</DefaultLayout>
+);
