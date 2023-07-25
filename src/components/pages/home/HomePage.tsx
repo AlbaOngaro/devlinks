@@ -26,8 +26,6 @@ export function useEditForm() {
 }
 
 export function HomePage({ links, profile }: EditFormValue) {
-  console.debug(links, profile);
-
   const { current } = useCurrentTabContext();
 
   const methods = useForm<EditFormValue>({

@@ -10,7 +10,11 @@ interface Props {
 
 export function PreviewLink({ link }: Props) {
   return (
-    <a css={(theme) => styles.link(theme, link.type)} href={link.url}>
+    <a
+      css={(theme) => styles.link(theme, link.type)}
+      href={link.url}
+      target="_blank"
+    >
       <Image
         alt={`${link.label} Icon`}
         src={`/images/icon-${link.type}.svg`}
