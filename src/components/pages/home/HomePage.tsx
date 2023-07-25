@@ -9,6 +9,11 @@ import { LinksCard } from "./components/links-card/LinksCard";
 import { PreviewCard } from "./components/preview-card/PreviewCard";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { supabase } from "lib/supabase";
+import {
+  Tab,
+  useCurrentTabContext,
+} from "providers/current-tab/CurrentTabProvider";
+import { ProfileCard } from "components/pages/home/components/profile-card/ProfileCard";
 
 interface Props {
   links: Link[];
@@ -19,6 +24,8 @@ export function useLinksForm() {
 }
 
 export function HomePage({ links }: Props) {
+  const { current } = useCurrentTabContext();
+
   const methods = useForm<{ links: Link[] }>({
     defaultValues: {
       links,
@@ -37,7 +44,16 @@ export function HomePage({ links }: Props) {
     >
       <FormProvider {...methods}>
         <PreviewCard />
-        <LinksCard />
+        {(() => {
+          switch (current) {
+            case Tab.Links:
+              return <LinksCard />;
+            case Tab.Profile:
+              return <ProfileCard />;
+            default:
+              return null;
+          }
+        })()}
       </FormProvider>
     </SWRConfig>
   );

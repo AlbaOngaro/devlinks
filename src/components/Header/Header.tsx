@@ -4,7 +4,10 @@ import { Button } from "components/Button/Button";
 import * as styles from "./Header.styles";
 import { supabase } from "lib/supabase";
 import { Link1Icon, PersonIcon } from "@radix-ui/react-icons";
-import { useCurrentTabContext } from "providers/current-tab/CurrentTabProvider";
+import {
+  Tab,
+  useCurrentTabContext,
+} from "providers/current-tab/CurrentTabProvider";
 
 export function Header() {
   const { current, setCurrent } = useCurrentTabContext();
@@ -20,15 +23,15 @@ export function Header() {
 
       <div css={styles.tabButtons}>
         <button
-          onClick={() => setCurrent(0)}
-          css={(theme) => styles.tabButton(theme, current === 0)}
+          onClick={() => setCurrent(Tab.Links)}
+          css={(theme) => styles.tabButton(theme, current === Tab.Links)}
         >
           <Link1Icon />
           Links
         </button>
         <button
-          onClick={() => setCurrent(1)}
-          css={(theme) => styles.tabButton(theme, current === 1)}
+          onClick={() => setCurrent(Tab.Profile)}
+          css={(theme) => styles.tabButton(theme, current === Tab.Profile)}
         >
           <PersonIcon />
           Profile Details
