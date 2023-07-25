@@ -7,7 +7,7 @@ export const supabase = createClient(
     "",
   {
     auth: {
-      persistSession: false,
+      persistSession: typeof window !== "undefined",
     },
   },
 );

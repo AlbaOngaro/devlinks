@@ -19,7 +19,6 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
-
   const getLayout = Component.getLayout || ((page) => page);
 
   useEffect(() => {
@@ -34,13 +33,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             nookies.set(undefined, "dl-refresh-token", session.refresh_token, {
               maxAge,
             });
+
             return router.reload();
           }
         }
         case "SIGNED_OUT": {
           nookies.destroy(undefined, "dl-access-token");
           nookies.destroy(undefined, "dl-refresh-token");
-          return router.reload();
+          return router.push("/login");
         }
         default:
           return;

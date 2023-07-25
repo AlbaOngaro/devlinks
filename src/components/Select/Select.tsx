@@ -6,7 +6,8 @@ import * as styles from "./Select.styles";
 
 export interface Option<T> {
   label: ReactNode;
-  value: T;
+  value: string;
+  data: T;
 }
 
 interface Props<T> {

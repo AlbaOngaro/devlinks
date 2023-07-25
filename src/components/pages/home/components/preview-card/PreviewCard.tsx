@@ -1,8 +1,10 @@
+import { useFieldArray } from "react-hook-form";
+
 import { Card } from "components/Card/Card";
+import { PreviewLink } from "components/PreviewLink/PreviewLink";
+import { useLinksForm } from "components/pages/home/HomePage";
 
 import * as styles from "./PreviewCard.styles";
-import { PreviewLink } from "components/PreviewLink/PreviewLink";
-import { useLinksContext } from "components/pages/home/HomePage";
 
 export function PreviewCard() {
   const user = {
@@ -12,7 +14,8 @@ export function PreviewCard() {
       "https://lh3.googleusercontent.com/ogw/AGvuzYbKc9vlR4BYVfv_US_wAFo82pr0vNUfIq_xWZ8wzQ=s64-c-mo",
   };
 
-  const { links } = useLinksContext();
+  const { watch } = useLinksForm();
+  const links = watch("links");
 
   return (
     <Card css={styles.card}>

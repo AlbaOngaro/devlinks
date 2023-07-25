@@ -1,13 +1,15 @@
 import { Root } from "@radix-ui/react-form";
+import { css } from "@emotion/react";
+import { Link1Icon } from "@radix-ui/react-icons";
+import { FormEvent } from "react";
+import Image from "next/image";
+
 import { Input } from "components/Input/Input";
 import { Select } from "components/Select/Select";
 
-import * as styles from "./NewLinkForm.styles";
 import { Link, Platform } from "types";
-import { useLinksContext } from "components/pages/home/HomePage";
-import Image from "next/image";
-import { css } from "@emotion/react";
-import { Link1Icon } from "@radix-ui/react-icons";
+
+import * as styles from "./LinkForm.styles";
 
 const PLATFORMS = [
   { value: "github", label: "Github" },
@@ -44,10 +46,18 @@ const PLATFORMS = [
       {option.label}
     </span>
   ),
+  data: option.label,
 }));
 
-export function NewLinkForm({ id, url }: Link) {
-  const { setLinks } = useLinksContext();
+interface Props extends Link {
+  onRemove: (link: Link) => void;
+  onUpdate: (newLink: Partial<Link>) => void;
+}
+
+export function LinkForm({ id, url, type, label, onRemove, onUpdate }: Props) {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <article css={styles.item}>
@@ -55,30 +65,27 @@ export function NewLinkForm({ id, url }: Link) {
         <h6>Link #{id}</h6>
         <button
           onClick={() =>
-            setLinks((curr) => curr.filter((link) => link.id !== id))
+            onRemove({
+              id,
+              url,
+              type,
+              label,
+            })
           }
         >
           Remove
         </button>
       </header>
-      <Root css={styles.form}>
+      <Root css={styles.form} onSubmit={handleSubmit}>
         <Select
           label="Platform"
-          defaultOption={PLATFORMS[0]}
+          defaultOption={{ label, value: type, data: label }}
           options={PLATFORMS}
           onChange={(option) =>
-            setLinks((curr) =>
-              curr.map((link) => {
-                if (link.id === id) {
-                  return {
-                    ...link,
-                    type: option.value as Platform,
-                  };
-                }
-
-                return link;
-              }),
-            )
+            onUpdate({
+              type: option.value as Platform,
+              label: option.data,
+            })
           }
         />
         <Input
@@ -87,18 +94,9 @@ export function NewLinkForm({ id, url }: Link) {
           label="Link"
           value={url}
           onChange={(e) =>
-            setLinks((curr) =>
-              curr.map((link) => {
-                if (link.id === id) {
-                  return {
-                    ...link,
-                    url: e.target.value,
-                  };
-                }
-
-                return link;
-              }),
-            )
+            onUpdate({
+              url: e.target.value,
+            })
           }
           validations={{
             typeMismatch: "Please check the URL",

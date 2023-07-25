@@ -17,19 +17,25 @@ export const button = (theme: Theme, variant: "primary" | "secondary") => [
     font-weight: 600;
     line-height: 150%;
     width: 100%;
+
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
   `,
   variant === "primary" &&
     css`
       background: ${theme.colors.purple};
       color: ${theme.colors.white};
 
-      &:is(:hover, :active, :focus) {
+      &:is(:hover, :active, :focus):not(:disabled) {
         background: ${theme.colors.purpleHoverColor};
         box-shadow: 0px 0px 32px 0px rgba(99, 60, 255, 0.25);
       }
 
       &:disabled {
         opacity: 0.25;
+        cursor: not-allowed;
       }
     `,
   variant === "secondary" &&
@@ -38,12 +44,13 @@ export const button = (theme: Theme, variant: "primary" | "secondary") => [
       border: 1px solid ${theme.colors.purple};
       color: ${theme.colors.purple};
 
-      &:is(:hover, :active, :focus) {
+      &:is(:hover, :active, :focus):not(:disabled) {
         background: ${theme.colors.purpleHoverColor};
       }
 
       &:disabled {
         opacity: 0.25;
+        cursor: not-allowed;
       }
     `,
 ];

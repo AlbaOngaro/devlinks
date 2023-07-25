@@ -20,8 +20,6 @@ export async function middleware(req: NextRequest) {
 
   const { error } = await supabase.auth.getUser();
 
-  console.error(error);
-
   if (
     !error &&
     ["/login", "/register"].some((path) => req.url.endsWith(path))
