@@ -1,13 +1,15 @@
 import Image from "next/image";
-import { Button } from "components/Button/Button";
-
-import * as styles from "./Header.styles";
-import { supabase } from "lib/supabase";
 import { Link1Icon, PersonIcon } from "@radix-ui/react-icons";
+
+import { Button } from "components/button/Button";
+import { supabase } from "lib/supabase";
+
 import {
   Tab,
   useCurrentTabContext,
 } from "providers/current-tab/CurrentTabProvider";
+
+import * as styles from "./Header.styles";
 
 export function Header() {
   const { current, setCurrent } = useCurrentTabContext();

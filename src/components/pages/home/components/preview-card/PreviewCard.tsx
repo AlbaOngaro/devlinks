@@ -1,18 +1,14 @@
 import { useFieldArray } from "react-hook-form";
 
-import { Card } from "components/Card/Card";
-import { PreviewLink } from "components/PreviewLink/PreviewLink";
+import { Card } from "components/card/Card";
+import { PreviewLink } from "components/preview-link/PreviewLink";
 import { useLinksForm } from "components/pages/home/HomePage";
 
 import * as styles from "./PreviewCard.styles";
+import { useGetProfile } from "hooks/useGetProfile";
 
 export function PreviewCard() {
-  const user = {
-    name: "Alba Ongaro",
-    email: "alba.ongaro@outlook.com",
-    photoURL:
-      "https://lh3.googleusercontent.com/ogw/AGvuzYbKc9vlR4BYVfv_US_wAFo82pr0vNUfIq_xWZ8wzQ=s64-c-mo",
-  };
+  const { data: user } = useGetProfile();
 
   const { watch } = useLinksForm();
   const links = watch("links");
@@ -22,11 +18,13 @@ export function PreviewCard() {
       <div css={styles.phone}>
         <header css={styles.header}>
           <div css={styles.avatar}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            {user.photoURL && <img src={user.photoURL} alt="user pic" />}
+            {user?.app_metadata?.photoURL && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={user?.app_metadata?.photoURL} alt="user pic" />
+            )}
           </div>
-          <h3 css={styles.name}>{user.name}</h3>
-          <p css={styles.email}>{user.email}</p>
+          <h3 css={styles.name}>{user?.app_metadata?.name}</h3>
+          <p css={styles.email}>{user?.email}</p>
         </header>
         {links && (
           <div css={styles.wrapper}>

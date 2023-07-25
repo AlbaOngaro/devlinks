@@ -1,6 +1,6 @@
 import { Theme, css } from "@emotion/react";
 
-import { Platform } from "./types";
+import { Platform } from "types";
 
 export const link = (theme: Theme, type: Platform) => [
   css`

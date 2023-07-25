@@ -2,8 +2,8 @@ import { FormEvent, ReactElement, useState } from "react";
 import { EnvelopeClosedIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import * as Form from "@radix-ui/react-form";
 
-import { Button } from "components/Button/Button";
-import { Input } from "components/Input/Input";
+import { Button } from "components/button/Button";
+import { Input } from "components/input/Input";
 
 import * as styles from "./RegisterPage.styles";
 import { supabase } from "lib/supabase";

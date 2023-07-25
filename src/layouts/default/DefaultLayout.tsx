@@ -1,4 +1,4 @@
-import { Header } from "components/Header/Header";
+import { Header } from "components/header/Header";
 import { PropsWithChildren } from "react";
 
 import { CurrentTabProvider } from "providers/current-tab/CurrentTabProvider";

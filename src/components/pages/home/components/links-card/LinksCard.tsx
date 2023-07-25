@@ -2,8 +2,8 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { useFieldArray } from "react-hook-form";
 import { v4 } from "uuid";
 
-import { Button } from "components/Button/Button";
-import { Card } from "components/Card/Card";
+import { Button } from "components/button/Button";
+import { Card } from "components/card/Card";
 
 import * as styles from "./LinksCard.styles";
 import { EmptyState } from "./empty-state/EmptyState";

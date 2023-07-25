@@ -4,8 +4,8 @@ import { Link1Icon } from "@radix-ui/react-icons";
 import { FormEvent } from "react";
 import Image from "next/image";
 
-import { Input } from "components/Input/Input";
-import { Select } from "components/Select/Select";
+import { Input } from "components/input/Input";
+import { Select } from "components/select/Select";
 
 import { Link, Platform } from "types";
 

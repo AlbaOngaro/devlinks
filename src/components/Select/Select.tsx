@@ -1,6 +1,6 @@
 import { Fragment, ReactElement, ReactNode } from "react";
 import * as RUISelect from "@radix-ui/react-select";
-import { CaretDownIcon, Link1Icon } from "@radix-ui/react-icons";
+import { CaretDownIcon } from "@radix-ui/react-icons";
 
 import * as styles from "./Select.styles";
 
