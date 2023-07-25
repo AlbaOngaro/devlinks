@@ -20,27 +20,30 @@ export function ProfileCard() {
 
       <Root css={styles.form}>
         <section css={styles.item}>
-          <label>Profile picture</label> <FilePicker />
+          <label css={styles.label}>Profile picture</label> <FilePicker />
         </section>
 
         <section css={styles.item}>
-          <label>First name*</label>
+          <label css={styles.label}>First name*</label>
           <Input
             required
             validations={{ valueMissing: "This field is required!" }}
             defaultValue={user?.app_metadata?.firstName || ""}
+            placeholder="e.g. John"
           />
-          <label>Last name*</label>
+          <label css={styles.label}>Last name*</label>
           <Input
             required
             validations={{ valueMissing: "This field is required!" }}
             defaultValue={user?.app_metadata?.lastName || ""}
+            placeholder="e.g. Appleseed"
           />
-          <label>Email</label>
+          <label css={styles.label}>Email</label>
           <Input
             type="email"
             validations={{ typeMismatch: "Please use a valid email address" }}
             defaultValue={user?.email}
+            placeholder="e.g. email@example.com"
           />
         </section>
       </Root>

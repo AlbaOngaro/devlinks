@@ -20,6 +20,14 @@ export const form = css`
   width: 100%;
 `;
 
+export const label = (theme: Theme) => css`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: ${theme.colors.gray};
+`;
+
 export const item = (theme: Theme) => css`
   display: grid;
   grid-template-columns: 240px 1fr;
