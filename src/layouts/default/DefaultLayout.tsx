@@ -1,7 +1,7 @@
-import { Header } from "components/header/Header";
+import { CurrentTabProvider } from "providers/current-tab/CurrentTabProvider";
 import { PropsWithChildren } from "react";
 
-import { CurrentTabProvider } from "providers/current-tab/CurrentTabProvider";
+import { Header } from "components/header/Header";
 
 import * as styles from "./DefaultLayout.styles";
 

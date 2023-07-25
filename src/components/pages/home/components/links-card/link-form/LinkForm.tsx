@@ -1,13 +1,12 @@
-import { Root } from "@radix-ui/react-form";
 import { css } from "@emotion/react";
+import { Root } from "@radix-ui/react-form";
 import { Link1Icon } from "@radix-ui/react-icons";
-import { FormEvent } from "react";
 import Image from "next/image";
+import { FormEvent } from "react";
+import { Link, Platform } from "types";
 
 import { Input } from "components/input/Input";
 import { Select } from "components/select/Select";
-
-import { Link, Platform } from "types";
 
 import * as styles from "./LinkForm.styles";
 

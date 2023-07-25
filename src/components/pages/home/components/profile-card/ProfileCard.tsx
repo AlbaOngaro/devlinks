@@ -1,11 +1,12 @@
 import { Root } from "@radix-ui/react-form";
-
-import { Card } from "components/card/Card";
-import { Input } from "components/input/Input";
 import { useGetProfile } from "hooks/useGetProfile";
 
-import * as styles from "./ProfileCard.styles";
 import { Button } from "components/button/Button";
+import { Card } from "components/card/Card";
+import { FilePicker } from "components/file-picker/FilePicker";
+import { Input } from "components/input/Input";
+
+import * as styles from "./ProfileCard.styles";
 
 export function ProfileCard() {
   const { data: user } = useGetProfile();
@@ -19,10 +20,7 @@ export function ProfileCard() {
 
       <Root css={styles.form}>
         <section css={styles.item}>
-          <label>Profile picture</label>{" "}
-          <fieldset>
-            <input type="file" />
-          </fieldset>
+          <label>Profile picture</label> <FilePicker />
         </section>
 
         <section css={styles.item}>

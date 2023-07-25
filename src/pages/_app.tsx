@@ -1,13 +1,13 @@
 import { Global, ThemeProvider } from "@emotion/react";
-import type { AppProps } from "next/app";
-import { ReactElement, ReactNode, useEffect } from "react";
 import { NextPage } from "next";
+import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import nookies from "nookies";
+import { ReactElement, ReactNode, useEffect } from "react";
+import { globalStyles } from "styles/global.styles";
+import { theme } from "styles/theme";
 
 import { supabase } from "lib/supabase";
-import { theme } from "styles/theme";
-import { globalStyles } from "styles/global.styles";
-import { useRouter } from "next/router";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

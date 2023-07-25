@@ -1,4 +1,4 @@
-import { Theme, css } from "@emotion/react";
+import { css, Theme } from "@emotion/react";
 
 import { label as labelBase } from "components/input/Input.styles";
 

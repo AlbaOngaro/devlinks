@@ -1,11 +1,10 @@
-import { useFieldArray } from "react-hook-form";
+import { useGetProfile } from "hooks/useGetProfile";
 
 import { Card } from "components/card/Card";
-import { PreviewLink } from "components/preview-link/PreviewLink";
 import { useLinksForm } from "components/pages/home/HomePage";
+import { PreviewLink } from "components/preview-link/PreviewLink";
 
 import * as styles from "./PreviewCard.styles";
-import { useGetProfile } from "hooks/useGetProfile";
 
 export function PreviewCard() {
   const { data: user } = useGetProfile();

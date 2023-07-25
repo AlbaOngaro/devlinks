@@ -1,8 +1,8 @@
-import * as styles from "./PreviewLink.styles";
-import Image from "next/image";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-
+import Image from "next/image";
 import { Link } from "types";
+
+import * as styles from "./PreviewLink.styles";
 
 interface Props {
   link: Link;

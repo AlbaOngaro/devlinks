@@ -1,15 +1,15 @@
-import { FormEvent, ReactElement, useState } from "react";
 import * as Form from "@radix-ui/react-form";
 import { EnvelopeClosedIcon, LockClosedIcon } from "@radix-ui/react-icons";
-
-import { Input } from "components/input/Input";
-import { Button } from "components/button/Button";
-
-import * as styles from "./LoginPage.styles";
-import { supabase } from "lib/supabase";
-import { useRouter } from "next/router";
 import { AuthLayout } from "layouts/auth/AuthLayout";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { FormEvent, ReactElement, useState } from "react";
+
+import { Button } from "components/button/Button";
+import { Input } from "components/input/Input";
+import { supabase } from "lib/supabase";
+
+import * as styles from "./LoginPage.styles";
 
 export function LoginPage() {
   const router = useRouter();

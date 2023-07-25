@@ -1,5 +1,4 @@
-import { Theme, css } from "@emotion/react";
-
+import { css, Theme } from "@emotion/react";
 import { Platform } from "types";
 
 export const link = (theme: Theme, type: Platform) => [

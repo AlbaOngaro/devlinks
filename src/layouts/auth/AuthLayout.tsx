@@ -1,6 +1,7 @@
-import { Card } from "components/card/Card";
 import Image from "next/image";
 import { PropsWithChildren } from "react";
+
+import { Card } from "components/card/Card";
 
 import * as styles from "./AuthLayout.styles";
 

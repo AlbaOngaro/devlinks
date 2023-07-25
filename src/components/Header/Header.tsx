@@ -1,13 +1,12 @@
-import Image from "next/image";
 import { Link1Icon, PersonIcon } from "@radix-ui/react-icons";
-
-import { Button } from "components/button/Button";
-import { supabase } from "lib/supabase";
-
+import Image from "next/image";
 import {
   Tab,
   useCurrentTabContext,
 } from "providers/current-tab/CurrentTabProvider";
+
+import { Button } from "components/button/Button";
+import { supabase } from "lib/supabase";
 
 import * as styles from "./Header.styles";
 

@@ -1,17 +1,17 @@
 import { PlusIcon } from "@radix-ui/react-icons";
+import { useGetLinks } from "hooks/useGetLinks";
 import { useFieldArray } from "react-hook-form";
+import { Link } from "types";
 import { v4 } from "uuid";
 
 import { Button } from "components/button/Button";
 import { Card } from "components/card/Card";
+import { useLinksForm } from "components/pages/home/HomePage";
+import { supabase } from "lib/supabase";
 
-import * as styles from "./LinksCard.styles";
 import { EmptyState } from "./empty-state/EmptyState";
 import { LinkForm } from "./link-form/LinkForm";
-import { useLinksForm } from "components/pages/home/HomePage";
-import { useGetLinks } from "hooks/useGetLinks";
-import { supabase } from "lib/supabase";
-import { Link } from "types";
+import * as styles from "./LinksCard.styles";
 
 export function LinksCard() {
   const { mutate } = useGetLinks();
@@ -51,7 +51,7 @@ export function LinksCard() {
           type: link.type,
         }));
 
-      const [newLinks, deletedLinks] = await Promise.all([
+      const [newLinks] = await Promise.all([
         supabase
           .from("links")
           .upsert(toBeCreateOrUpdated)

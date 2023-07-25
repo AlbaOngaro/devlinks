@@ -1,6 +1,7 @@
-import { supabase } from "lib/supabase";
 import useSWR from "swr";
 import { Link } from "types";
+
+import { supabase } from "lib/supabase";
 
 export function useGetLinks() {
   return useSWR<Link[], unknown, "links">("links", async () => {

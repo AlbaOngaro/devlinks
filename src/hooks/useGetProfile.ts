@@ -1,6 +1,7 @@
 import { AuthError, User } from "@supabase/supabase-js";
-import { supabase } from "lib/supabase";
 import useSWR from "swr";
+
+import { supabase } from "lib/supabase";
 
 export function useGetProfile() {
   return useSWR<User, AuthError, "profile">(

@@ -1,19 +1,19 @@
-import { ReactElement } from "react";
-import { SWRConfig } from "swr";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
-
-import { Link } from "types";
 import { DefaultLayout } from "layouts/default/DefaultLayout";
-
-import { LinksCard } from "./components/links-card/LinksCard";
-import { PreviewCard } from "./components/preview-card/PreviewCard";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
-import { supabase } from "lib/supabase";
 import {
   Tab,
   useCurrentTabContext,
 } from "providers/current-tab/CurrentTabProvider";
+import { ReactElement } from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { SWRConfig } from "swr";
+import { Link } from "types";
+
 import { ProfileCard } from "components/pages/home/components/profile-card/ProfileCard";
+import { supabase } from "lib/supabase";
+
+import { LinksCard } from "./components/links-card/LinksCard";
+import { PreviewCard } from "./components/preview-card/PreviewCard";
 
 interface Props {
   links: Link[];
