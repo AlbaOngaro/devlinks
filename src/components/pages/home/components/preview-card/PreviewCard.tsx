@@ -17,12 +17,15 @@ export function PreviewCard() {
       <div css={styles.phone}>
         <header css={styles.header}>
           <div css={styles.avatar}>
-            {user?.app_metadata?.photoURL && (
+            {user?.user_metadata?.photoURL && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={user?.app_metadata?.photoURL} alt="user pic" />
+              <img src={user?.user_metadata?.photoURL} alt="user pic" />
             )}
           </div>
-          <h3 css={styles.name}>{user?.app_metadata?.name}</h3>
+          <h3 css={styles.name}>
+            {user?.user_metadata?.firstName || ""}
+            {user?.user_metadata?.lastName || ""}
+          </h3>
           <p css={styles.email}>{user?.email}</p>
         </header>
         {links && (

@@ -86,27 +86,22 @@ export async function getServerSideProps({
   const user = await supabase.auth.getUser();
 
   if (user.error || !user.data) {
-    console.error(user.error);
-
     return {
-      notFound: true,
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
     };
   }
 
-  const links = await supabase
+  const { data: links = [] } = await supabase
     .from("links")
     .select<"links", Link>()
     .eq("uid", user.data.user.id);
 
-  if (links.error) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
-      links: links.data,
+      links: links || [],
     },
   };
 }

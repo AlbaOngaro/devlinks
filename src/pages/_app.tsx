@@ -24,7 +24,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       switch (event) {
-        case "SIGNED_IN": {
+        case "SIGNED_IN":
+        case "TOKEN_REFRESHED": {
           if (session) {
             const maxAge = 60 * 60;
             nookies.set(undefined, "dl-access-token", session.access_token, {
@@ -36,6 +37,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
             return router.reload();
           }
+
+          return;
         }
         case "SIGNED_OUT": {
           nookies.destroy(undefined, "dl-access-token");

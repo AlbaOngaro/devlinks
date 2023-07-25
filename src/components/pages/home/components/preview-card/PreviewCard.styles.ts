@@ -41,6 +41,15 @@ export const avatar = (theme: Theme) => css`
     border: none;
     background-color: ${theme.colors.borders};
   }
+
+  &:has(> img) {
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
 `;
 
 export const name = (theme: Theme) => css`

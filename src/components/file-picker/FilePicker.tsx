@@ -1,10 +1,59 @@
 import { ImageIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import {
+  ChangeEvent,
+  DetailedHTMLProps,
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+} from "react";
 
 import * as styles from "./FilePicker.styles";
 
-export function FilePicker() {
-  const [file, setFile] = useState<string>();
+interface Props
+  extends Omit<
+    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+    "value"
+  > {
+  label?: string;
+  value?: string | FileList;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const FilePicker = forwardRef(function FilePicker(
+  { label, onChange, value, ...rest }: Props,
+  ref: ForwardedRef<HTMLInputElement>,
+) {
+  const [file, setFile] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      if (typeof value === "string") {
+        return setFile(value);
+      }
+
+      if (typeof value === "undefined") {
+        return setFile("");
+      }
+
+      const fr = new FileReader();
+      const promise = new Promise<string | undefined>((resolve, reject) => {
+        fr.onload = () => {
+          if (fr.result && typeof fr.result === "string") {
+            return resolve(fr.result);
+          }
+
+          reject();
+        };
+      });
+
+      fr.readAsDataURL(value[0]);
+
+      const val = await promise;
+      return setFile(val || "");
+    })();
+  }, [value]);
 
   return (
     <label css={styles.label}>
@@ -12,21 +61,9 @@ export function FilePicker() {
         css={styles.input}
         type="file"
         accept="image/png, image/jpeg"
-        onChange={(e) => {
-          if (e?.target?.files && e?.target?.files[0] && FileReader) {
-            console.debug(e?.target?.files[0]);
-
-            const fr = new FileReader();
-
-            fr.onload = () => {
-              if (fr.result && typeof fr.result === "string") {
-                setFile(fr.result);
-              }
-            };
-
-            fr.readAsDataURL(e?.target?.files[0]);
-          }
-        }}
+        ref={ref}
+        onChange={onChange}
+        {...rest}
       />
       {file ? (
         <picture css={styles.picture}>
@@ -37,7 +74,7 @@ export function FilePicker() {
           <ImageIcon /> + Upload Image
         </article>
       )}
-      Image must be below 1024x1024px. Use PNG or JPG format.
+      {label}
     </label>
   );
-}
+});
