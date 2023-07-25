@@ -37,21 +37,30 @@ export const FilePicker = forwardRef(function FilePicker(
         return setFile("");
       }
 
-      const fr = new FileReader();
-      const promise = new Promise<string | undefined>((resolve, reject) => {
-        fr.onload = () => {
-          if (fr.result && typeof fr.result === "string") {
-            return resolve(fr.result);
-          }
+      if (value[0]) {
+        try {
+          const fr = new FileReader();
+          const promise = new Promise<string | undefined>((resolve, reject) => {
+            fr.onload = () => {
+              if (fr.result && typeof fr.result === "string") {
+                return resolve(fr.result);
+              }
 
-          reject();
-        };
-      });
+              reject();
+            };
+          });
 
-      fr.readAsDataURL(value[0]);
+          fr.readAsDataURL(value[0]);
 
-      const val = await promise;
-      return setFile(val || "");
+          const val = await promise;
+          return setFile(val || "");
+        } catch (error: unknown) {
+          console.error(error);
+          return setFile("");
+        }
+      }
+
+      return setFile("");
     })();
   }, [value]);
 

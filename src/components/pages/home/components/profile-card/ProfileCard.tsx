@@ -1,48 +1,45 @@
 import { Root } from "@radix-ui/react-form";
 import { useGetProfile } from "hooks/useGetProfile";
-import { useForm } from "react-hook-form";
+import { userToProfile } from "utils/userToProfile";
 
 import { Button } from "components/button/Button";
 import { Card } from "components/card/Card";
 import { FilePicker } from "components/file-picker/FilePicker";
 import { Input } from "components/input/Input";
+import { useEditForm } from "components/pages/home/HomePage";
 import { supabase } from "lib/supabase";
 
 import * as styles from "./ProfileCard.styles";
 
 export function ProfileCard() {
-  const { data: user, mutate } = useGetProfile();
+  const { mutate } = useGetProfile();
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { isSubmitting, isValid, isDirty },
-  } = useForm<{
-    firstName: string;
-    lastName: string;
-    photoURL: string | FileList;
-    email: string;
-  }>({
-    defaultValues: {
-      firstName: user?.user_metadata.firstName,
-      lastName: user?.user_metadata.lastName,
-      photoURL: user?.user_metadata.photoURL,
-      email: user?.email,
-    },
-  });
+  } = useEditForm();
 
   const onSubmit = handleSubmit(async (formData) => {
     await mutate(
-      async (current) => {
-        const { photoURL } = formData;
+      async (currentProfile) => {
+        const { photoURL } = formData.profile;
 
         if (typeof photoURL !== "string" && photoURL[0]) {
+          const {
+            data: { user: currentUser },
+          } = await supabase.auth.getUser();
+
+          if (!currentUser) {
+            return currentProfile;
+          }
+
           const {
             data: { publicUrl },
           } = await supabase.storage
             .from("avatars")
-            .upload(`public/${current?.id}.png`, photoURL[0], {
+            .upload(`public/${currentUser.id}.png`, photoURL[0], {
               upsert: true,
               cacheControl: "0",
             })
@@ -64,27 +61,30 @@ export function ProfileCard() {
             error,
           } = await supabase.auth.updateUser({
             data: {
-              ...formData,
+              ...formData.profile,
               photoURL: publicUrl,
             },
           });
+
           if (error || !user) {
-            return current;
+            return currentProfile;
           }
-          return user;
+
+          return userToProfile(user);
         }
 
         const {
           data: { user },
           error,
         } = await supabase.auth.updateUser({
-          data: formData,
+          data: formData.profile,
         });
+
         if (error || !user) {
-          console.error(error);
-          return current;
+          return currentProfile;
         }
-        return user;
+
+        return userToProfile(user);
       },
       { revalidate: true },
     );
@@ -102,8 +102,8 @@ export function ProfileCard() {
           <label css={styles.label}>Profile picture</label>{" "}
           <FilePicker
             label="Image must be below 1024x1024px. Use PNG or JPG format."
-            value={watch("photoURL")}
-            {...register("photoURL")}
+            value={watch("profile.photoURL")}
+            {...register("profile.photoURL")}
           />
         </section>
 
@@ -113,14 +113,14 @@ export function ProfileCard() {
             required
             validations={{ valueMissing: "This field is required!" }}
             placeholder="e.g. John"
-            {...register("firstName", { required: true })}
+            {...register("profile.firstName", { required: true })}
           />
           <label css={styles.label}>Last name*</label>
           <Input
             required
             validations={{ valueMissing: "This field is required!" }}
             placeholder="e.g. Appleseed"
-            {...register("lastName", { required: true })}
+            {...register("profile.lastName", { required: true })}
           />
           <label css={styles.label}>Email</label>
           <Input
@@ -128,7 +128,7 @@ export function ProfileCard() {
             validations={{ typeMismatch: "Please use a valid email address" }}
             placeholder="e.g. email@example.com"
             disabled
-            {...register("email")}
+            {...register("profile.email")}
           />
         </section>
       </Root>

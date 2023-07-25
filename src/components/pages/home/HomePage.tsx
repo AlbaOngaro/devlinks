@@ -7,7 +7,8 @@ import {
 import { ReactElement } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { SWRConfig } from "swr";
-import { Link } from "types";
+import { Link, Profile } from "types";
+import { userToProfile } from "utils/userToProfile";
 
 import { ProfileCard } from "components/pages/home/components/profile-card/ProfileCard";
 import { supabase } from "lib/supabase";
@@ -15,30 +16,33 @@ import { supabase } from "lib/supabase";
 import { LinksCard } from "./components/links-card/LinksCard";
 import { PreviewCard } from "./components/preview-card/PreviewCard";
 
-interface Props {
+interface EditFormValue {
   links: Link[];
+  profile: Profile;
 }
 
-export function useLinksForm() {
-  return useFormContext<{ links: Link[] }>();
+export function useEditForm() {
+  return useFormContext<EditFormValue>();
 }
 
-export function HomePage({ links }: Props) {
+export function HomePage({ links, profile }: EditFormValue) {
+  console.debug(links, profile);
+
   const { current } = useCurrentTabContext();
 
-  const methods = useForm<{ links: Link[] }>({
+  const methods = useForm<EditFormValue>({
     defaultValues: {
       links,
+      profile,
     },
   });
 
   return (
     <SWRConfig
       value={{
-        revalidateOnMount: false,
-        revalidateOnFocus: false,
         fallback: {
-          links,
+          "/api/links": links,
+          "/api/profile": profile,
         },
       }}
     >
@@ -65,7 +69,9 @@ HomePage.getLayout = (page: ReactElement) => (
 
 export async function getServerSideProps({
   req,
-}: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Props>> {
+}: GetServerSidePropsContext): Promise<
+  GetServerSidePropsResult<EditFormValue>
+> {
   const refreshToken = req.cookies["dl-refresh-token"];
   const accessToken = req.cookies["dl-access-token"];
 
@@ -83,9 +89,11 @@ export async function getServerSideProps({
     access_token: accessToken,
   });
 
-  const user = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (user.error || !user.data) {
+  if (!user) {
     return {
       redirect: {
         permanent: false,
@@ -97,11 +105,12 @@ export async function getServerSideProps({
   const { data: links = [] } = await supabase
     .from("links")
     .select<"links", Link>()
-    .eq("uid", user.data.user.id);
+    .eq("uid", user.id);
 
   return {
     props: {
       links: links || [],
+      profile: userToProfile(user),
     },
   };
 }

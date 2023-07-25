@@ -6,6 +6,7 @@ import nookies from "nookies";
 import { ReactElement, ReactNode, useEffect } from "react";
 import { globalStyles } from "styles/global.styles";
 import { theme } from "styles/theme";
+import { SWRConfig } from "swr";
 
 import { supabase } from "lib/supabase";
 
@@ -22,9 +23,24 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       switch (event) {
-        case "SIGNED_IN":
+        case "SIGNED_IN": {
+          if (session) {
+            const maxAge = 60 * 60;
+            nookies.set(undefined, "dl-access-token", session.access_token, {
+              maxAge,
+            });
+            nookies.set(undefined, "dl-refresh-token", session.refresh_token, {
+              maxAge,
+            });
+            break;
+          }
+
+          break;
+        }
         case "TOKEN_REFRESHED": {
           if (session) {
             const maxAge = 60 * 60;
@@ -34,28 +50,39 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             nookies.set(undefined, "dl-refresh-token", session.refresh_token, {
               maxAge,
             });
-
-            return router.reload();
           }
-
-          return;
+          break;
         }
         case "SIGNED_OUT": {
           nookies.destroy(undefined, "dl-access-token");
           nookies.destroy(undefined, "dl-refresh-token");
-          return router.push("/login");
+          router.push("/login");
+          break;
         }
         default:
-          return;
+          break;
       }
     });
+
+    return () => {
+      subscription.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      {getLayout(<Component {...pageProps} />)}
-    </ThemeProvider>
+    <SWRConfig
+      value={{
+        revalidateOnFocus: false,
+        refreshWhenHidden: false,
+        refreshWhenOffline: false,
+        revalidateOnReconnect: false,
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        {getLayout(<Component {...pageProps} />)}
+      </ThemeProvider>
+    </SWRConfig>
   );
 }

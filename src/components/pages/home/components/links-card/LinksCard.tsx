@@ -6,7 +6,7 @@ import { v4 } from "uuid";
 
 import { Button } from "components/button/Button";
 import { Card } from "components/card/Card";
-import { useLinksForm } from "components/pages/home/HomePage";
+import { useEditForm } from "components/pages/home/HomePage";
 import { supabase } from "lib/supabase";
 
 import { EmptyState } from "./empty-state/EmptyState";
@@ -15,7 +15,7 @@ import * as styles from "./LinksCard.styles";
 
 export function LinksCard() {
   const { mutate } = useGetLinks();
-  const { formState, control, setValue, watch, handleSubmit } = useLinksForm();
+  const { formState, control, setValue, watch, handleSubmit } = useEditForm();
   const {
     fields: links,
     append,

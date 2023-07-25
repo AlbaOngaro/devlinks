@@ -20,3 +20,10 @@ export interface Link {
   label: string;
   url: string;
 }
+
+export interface Profile {
+  firstName: string;
+  lastName: string;
+  photoURL: string | FileList;
+  email: string;
+}
