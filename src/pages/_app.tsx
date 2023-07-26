@@ -1,4 +1,5 @@
 import { Global, ThemeProvider } from "@emotion/react";
+import * as Toast from "@radix-ui/react-toast";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -80,8 +81,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       }}
     >
       <ThemeProvider theme={theme}>
-        <Global styles={globalStyles} />
-        {getLayout(<Component {...pageProps} />)}
+        <Toast.Provider>
+          <Global styles={globalStyles} />
+          {getLayout(<Component {...pageProps} />)}
+        </Toast.Provider>
       </ThemeProvider>
     </SWRConfig>
   );

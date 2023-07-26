@@ -15,7 +15,13 @@ import * as styles from "./LinksCard.styles";
 
 export function LinksCard() {
   const { mutate } = useGetLinks();
-  const { formState, control, setValue, watch, handleSubmit } = useEditForm();
+  const {
+    formState: { isDirty, isValid, isSubmitting, defaultValues },
+    control,
+    setValue,
+    watch,
+    handleSubmit,
+  } = useEditForm();
   const {
     fields: links,
     append,
@@ -34,15 +40,12 @@ export function LinksCard() {
         return [];
       }
 
-      const toBeDeleted = formState.defaultValues?.links?.filter(
+      const toBeDeleted = defaultValues?.links?.filter(
         (link) => !links.some((l) => l.id === link?.id),
       );
 
       const toBeCreateOrUpdated = links
-        .filter(
-          (link) =>
-            !formState.defaultValues?.links?.some((l) => l?.id === link.id),
-        )
+        .filter((link) => !defaultValues?.links?.some((l) => l?.id === link.id))
         .map((link) => ({
           id: link.id,
           uid: user.id,
@@ -125,9 +128,9 @@ export function LinksCard() {
       <footer css={styles.footer}>
         <Button
           variant="primary"
-          disabled={!formState.isDirty || !formState.isValid}
+          disabled={!isDirty || !isValid}
           onClick={onSubmit}
-          isLoading={formState.isSubmitting}
+          isLoading={isSubmitting}
         >
           Save
         </Button>

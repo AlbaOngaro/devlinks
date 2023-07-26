@@ -1,16 +1,26 @@
+import { DiscIcon } from "@radix-ui/react-icons";
+import { AnimatePresence } from "framer-motion";
 import { DefaultLayout } from "layouts/default/DefaultLayout";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import {
   Tab,
   useCurrentTabContext,
 } from "providers/current-tab/CurrentTabProvider";
-import { ReactElement } from "react";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { ReactElement, useState } from "react";
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 import { SWRConfig } from "swr";
 import { Link, Profile } from "types";
 import { userToProfile } from "utils/userToProfile";
+import { v4 } from "uuid";
 
 import { ProfileCard } from "components/pages/home/components/profile-card/ProfileCard";
+import { Toast } from "components/toast/Toast";
 import { supabase } from "lib/supabase";
 
 import { LinksCard } from "./components/links-card/LinksCard";
@@ -26,14 +36,29 @@ export function useEditForm() {
 }
 
 export function HomePage({ links, profile }: EditFormValue) {
+  const [notifications, setNotifications] = useState<string[]>([]);
+
   const { current } = useCurrentTabContext();
 
-  const methods = useForm<EditFormValue>({
-    defaultValues: {
-      links,
-      profile,
+  const { formState, handleSubmit, reset, ...methods } = useForm<EditFormValue>(
+    {
+      defaultValues: {
+        links,
+        profile,
+      },
     },
-  });
+  );
+
+  const handleSubmitWrapper = (
+    onSuccess: SubmitHandler<EditFormValue>,
+    onError?: SubmitErrorHandler<EditFormValue>,
+  ) => {
+    return handleSubmit(async (data) => {
+      setNotifications((curr) => [...curr, v4()]);
+      await onSuccess(data);
+      reset(data);
+    }, onError);
+  };
 
   return (
     <SWRConfig
@@ -44,7 +69,12 @@ export function HomePage({ links, profile }: EditFormValue) {
         },
       }}
     >
-      <FormProvider {...methods}>
+      <FormProvider
+        {...methods}
+        formState={formState}
+        handleSubmit={handleSubmitWrapper}
+        reset={reset}
+      >
         <PreviewCard />
         {(() => {
           switch (current) {
@@ -56,6 +86,24 @@ export function HomePage({ links, profile }: EditFormValue) {
               return null;
           }
         })()}
+        <AnimatePresence>
+          {notifications.map((id) => (
+            <Toast
+              key={id}
+              forceMount
+              duration={2000}
+              onOpenChange={() =>
+                setNotifications((curr) => curr.filter((i) => i !== id))
+              }
+              title={
+                <>
+                  <DiscIcon />
+                  Your changes have been successfully saved!
+                </>
+              }
+            />
+          ))}
+        </AnimatePresence>
       </FormProvider>
     </SWRConfig>
   );
