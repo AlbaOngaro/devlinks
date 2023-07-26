@@ -19,6 +19,7 @@ export interface Link {
   type: Platform;
   label: string;
   url: string;
+  order: number;
 }
 
 export interface Profile {

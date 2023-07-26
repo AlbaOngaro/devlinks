@@ -19,6 +19,7 @@ export function useGetLinks() {
       .from("links")
       .select<"", Link>()
       .eq("uid", user.id)
+      .order("order", { ascending: true })
       .then((res) => res.data || []);
   });
 }

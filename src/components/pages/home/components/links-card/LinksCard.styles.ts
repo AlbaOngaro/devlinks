@@ -41,6 +41,9 @@ export const linksWrapper = css`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 `;
 
 export const emptyTitle = css`

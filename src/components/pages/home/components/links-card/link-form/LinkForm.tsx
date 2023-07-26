@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { Root } from "@radix-ui/react-form";
-import { Link1Icon } from "@radix-ui/react-icons";
+import { DragHandleDots2Icon, Link1Icon } from "@radix-ui/react-icons";
+import { Reorder, useDragControls } from "framer-motion";
 import Image from "next/image";
 import { FormEvent } from "react";
 import { Link, Platform } from "types";
@@ -48,19 +49,41 @@ const PLATFORMS = [
   data: option.label,
 }));
 
-interface Props extends Link {
+interface Props {
   onRemove: (link: Link) => void;
   onUpdate: (newLink: Partial<Link>) => void;
+  link: Link;
 }
 
-export function LinkForm({ id, url, type, label, onRemove, onUpdate }: Props) {
+export function LinkForm({
+  link: { id, url, type, label },
+  onRemove,
+  onUpdate,
+}: Props) {
+  const controls = useDragControls();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
   };
 
   return (
-    <article css={styles.item}>
+    <Reorder.Item
+      css={styles.item}
+      value={id}
+      dragListener={false}
+      dragControls={controls}
+    >
       <header css={styles.header}>
+        <button
+          css={styles.dragBtn}
+          onPointerDown={(e) => {
+            console.debug("onPointerDown");
+            controls.start(e);
+          }}
+        >
+          <DragHandleDots2Icon />
+        </button>
+
         <h6>Link #{id}</h6>
         <button
           onClick={() =>
@@ -103,6 +126,6 @@ export function LinkForm({ id, url, type, label, onRemove, onUpdate }: Props) {
           }}
         />
       </Root>
-    </article>
+    </Reorder.Item>
   );
 }

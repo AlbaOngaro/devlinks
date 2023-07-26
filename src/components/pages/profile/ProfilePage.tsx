@@ -54,6 +54,7 @@ export async function getStaticProps({
       .from("links")
       .select<"links", Link>()
       .eq("uid", id)
+      .order("order", { ascending: true })
       .then((res) => res.data),
     supabase.auth.admin.getUserById(id).then((res) => res.data.user),
   ]);

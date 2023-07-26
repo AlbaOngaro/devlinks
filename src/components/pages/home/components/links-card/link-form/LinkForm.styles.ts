@@ -12,7 +12,7 @@ export const header = (theme: Theme) => css`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
   width: 100%;
 
   & h6 {
@@ -24,7 +24,8 @@ export const header = (theme: Theme) => css`
     color: ${theme.colors.gray};
   }
 
-  & button {
+  & button:nth-of-type(2) {
+    margin-left: auto;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -32,6 +33,16 @@ export const header = (theme: Theme) => css`
     color: ${theme.colors.gray};
     cursor: pointer;
   }
+`;
+
+export const dragBtn = css`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: initial;
+  cursor: grab;
 `;
 
 export const form = css`

@@ -1,4 +1,5 @@
 import { PlusIcon } from "@radix-ui/react-icons";
+import { Reorder } from "framer-motion";
 import { useGetLinks } from "hooks/useGetLinks";
 import { useFieldArray } from "react-hook-form";
 import { Link } from "types";
@@ -22,15 +23,13 @@ export function LinksCard() {
     watch,
     handleSubmit,
   } = useEditForm();
-  const {
-    fields: links,
-    append,
-    remove,
-  } = useFieldArray({
+  const { append, remove } = useFieldArray({
     control,
     name: "links",
     keyName: "key",
   });
+
+  const links = watch("links");
 
   const onSubmit = handleSubmit(async ({ links }) => {
     await mutate(async () => {
@@ -52,6 +51,7 @@ export function LinksCard() {
           url: link.url,
           label: link.label,
           type: link.type,
+          order: link.order,
         }));
 
       const [newLinks] = await Promise.all([
@@ -59,6 +59,7 @@ export function LinksCard() {
           .from("links")
           .upsert(toBeCreateOrUpdated)
           .select()
+          .order("order", { ascending: true })
           .then((res) => {
             if (res.error) {
               console.error(res.error);
@@ -93,6 +94,7 @@ export function LinksCard() {
               label: "Github",
               type: "github",
               url: "",
+              order: links.length,
             })
           }
         >
@@ -104,24 +106,42 @@ export function LinksCard() {
         {links.length === 0 ? (
           <EmptyState />
         ) : (
-          <div css={styles.linksWrapper}>
-            {links.map(({ key }, i) => {
-              const link = watch(`links.${i}`);
-              return (
-                <LinkForm
-                  key={key}
-                  onRemove={() => remove(i)}
-                  onUpdate={(newLink) =>
-                    setValue(`links.${i}`, {
-                      ...link,
-                      ...newLink,
-                    })
-                  }
-                  {...link}
-                />
+          <Reorder.Group
+            css={styles.linksWrapper}
+            values={links.map((link) => link.id)}
+            axis="y"
+            onReorder={(newOrder) => {
+              setValue(
+                "links",
+                newOrder.map((id, order) => {
+                  const link = links.find((link) => link.id == id) as Link;
+                  return {
+                    ...link,
+                    order,
+                  };
+                }),
+                {
+                  shouldDirty: true,
+                  shouldTouch: true,
+                  shouldValidate: true,
+                },
               );
-            })}
-          </div>
+            }}
+          >
+            {links.map((link, i) => (
+              <LinkForm
+                key={link.id}
+                onRemove={() => remove(i)}
+                onUpdate={(newLink) =>
+                  setValue(`links.${i}`, {
+                    ...link,
+                    ...newLink,
+                  })
+                }
+                link={link}
+              />
+            ))}
+          </Reorder.Group>
         )}
       </section>
 

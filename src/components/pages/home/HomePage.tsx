@@ -152,7 +152,8 @@ export async function getServerSideProps({
   const { data: links = [] } = await supabase
     .from("links")
     .select<"links", Link>()
-    .eq("uid", user.id);
+    .eq("uid", user.id)
+    .order("order", { ascending: true });
 
   return {
     props: {
