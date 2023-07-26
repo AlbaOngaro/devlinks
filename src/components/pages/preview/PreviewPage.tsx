@@ -1,5 +1,8 @@
+import { Link1Icon } from "@radix-ui/react-icons";
+import { AnimatePresence } from "framer-motion";
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { Link, Profile } from "types";
 import { userToProfile } from "utils/userToProfile";
 
@@ -7,6 +10,7 @@ import { Button } from "components/button/Button";
 import { Card } from "components/card/Card";
 import { Header } from "components/header/Header";
 import { ProfileContents } from "components/profile-contents/ProfileContents";
+import { Toast } from "components/toast/Toast";
 import { supabase } from "lib/supabase";
 
 import * as styles from "./PreviewPage.styles";
@@ -19,36 +23,53 @@ interface Props {
 export function PreviewPage({ links, profile }: Props) {
   const router = useRouter();
 
-  return (
-    <section css={styles.container}>
-      <Header>
-        <Button
-          css={styles.button}
-          onClick={() => router.push("/")}
-          variant="secondary"
-        >
-          Back to Editor
-        </Button>
-        <Button
-          css={styles.button}
-          variant="primary"
-          onClick={async () => {
-            try {
-              await navigator.clipboard.writeText(window.location.href);
-              console.log("Content copied to clipboard");
-            } catch (err) {
-              console.error("Failed to copy: ", err);
-            }
-          }}
-        >
-          Share Link
-        </Button>
-      </Header>
+  const [isCopySuccesful, setIsCopySuccesful] = useState(false);
 
-      <Card css={styles.card}>
-        <ProfileContents links={links} profile={profile} />
-      </Card>
-    </section>
+  return (
+    <>
+      <section css={styles.container}>
+        <Header>
+          <Button
+            css={styles.button}
+            onClick={() => router.push("/")}
+            variant="secondary"
+          >
+            Back to Editor
+          </Button>
+          <Button
+            css={styles.button}
+            variant="primary"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(window.location.href);
+                setIsCopySuccesful(true);
+              } catch (err) {
+                setIsCopySuccesful(false);
+              }
+            }}
+          >
+            Share Link
+          </Button>
+        </Header>
+
+        <Card css={styles.card}>
+          <ProfileContents links={links} profile={profile} />
+        </Card>
+      </section>
+      <AnimatePresence>
+        {isCopySuccesful && (
+          <Toast
+            duration={2000}
+            title={
+              <>
+                <Link1Icon /> The link has been copied to your clipboard!
+              </>
+            }
+            onOpenChange={(state) => setIsCopySuccesful(state)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
