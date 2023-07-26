@@ -86,25 +86,26 @@ export function HomePage({ links, profile }: EditFormValue) {
               return null;
           }
         })()}
-        <AnimatePresence>
-          {notifications.map((id) => (
-            <Toast
-              key={id}
-              forceMount
-              duration={2000}
-              onOpenChange={() =>
-                setNotifications((curr) => curr.filter((i) => i !== id))
-              }
-              title={
-                <>
-                  <DiscIcon />
-                  Your changes have been successfully saved!
-                </>
-              }
-            />
-          ))}
-        </AnimatePresence>
       </FormProvider>
+
+      <AnimatePresence>
+        {notifications.map((id) => (
+          <Toast
+            key={id}
+            forceMount
+            duration={2000}
+            onOpenChange={() =>
+              setNotifications((curr) => curr.filter((i) => i !== id))
+            }
+            title={
+              <>
+                <DiscIcon />
+                Your changes have been successfully saved!
+              </>
+            }
+          />
+        ))}
+      </AnimatePresence>
     </SWRConfig>
   );
 }

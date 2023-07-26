@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import { ReactElement, ReactNode, useEffect } from "react";
-import { globalStyles } from "styles/global.styles";
+import { globalStyles, toastViewPort } from "styles/global.styles";
 import { theme } from "styles/theme";
 import { SWRConfig } from "swr";
 
@@ -84,6 +84,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <Toast.Provider>
           <Global styles={globalStyles} />
           {getLayout(<Component {...pageProps} />)}
+
+          <Toast.Viewport css={toastViewPort} />
         </Toast.Provider>
       </ThemeProvider>
     </SWRConfig>

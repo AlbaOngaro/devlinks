@@ -40,11 +40,19 @@ export function PreviewPage({ links, profile }: Props) {
             css={styles.button}
             variant="primary"
             onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(window.location.href);
-                setIsCopySuccesful(true);
-              } catch (err) {
-                setIsCopySuccesful(false);
+              const {
+                data: { user },
+              } = await supabase.auth.getUser();
+
+              if (user) {
+                try {
+                  await navigator.clipboard.writeText(
+                    `${window.location.host}/profile/${user.id}`,
+                  );
+                  setIsCopySuccesful(true);
+                } catch (err) {
+                  setIsCopySuccesful(false);
+                }
               }
             }}
           >

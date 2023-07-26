@@ -1,14 +1,9 @@
 import { css, Theme } from "@emotion/react";
 
 export const container = (theme: Theme) => css`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 2fr));
-  grid-template-rows: min-content 1fr;
-  grid-row-gap: 40px;
-  padding: 24px;
   height: 100vh;
   width: 100vw;
-  position: relative;
+  display: flex;
 
   &::before {
     content: "";
@@ -26,16 +21,10 @@ export const container = (theme: Theme) => css`
   }
 `;
 
-export const button = css`
-  width: fit-content;
-`;
-
 export const card = (theme: Theme) => css`
-  grid-column: 1/-1;
-  justify-self: center;
-  align-self: center;
-  width: min(100%, 350px);
+  margin: auto;
   height: fit-content;
+  width: min(100%, 350px);
   display: flex;
   flex-direction: column;
   gap: 24px;

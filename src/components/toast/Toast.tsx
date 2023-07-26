@@ -36,7 +36,6 @@ export function Toast({
           <RUIToast.Close />
         </motion.li>
       </RUIToast.Root>
-      <RUIToast.Viewport css={styles.viewport} />
     </>
   );
 }

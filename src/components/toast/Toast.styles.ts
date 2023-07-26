@@ -32,21 +32,3 @@ export const title = (theme: Theme) => css`
   line-height: 150%;
   color: ${theme.colors.lightGray};
 `;
-
-export const viewport = css`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
-  gap: 10px;
-  margin: 0;
-  list-style: none;
-  z-index: 2147483647;
-  outline: none;
-  pointer-events: none;
-`;

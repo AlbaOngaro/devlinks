@@ -11,6 +11,22 @@ export function ProfileContents({
   links: Link[];
   profile: Profile;
 }) {
+  const getFullName = () => {
+    if (!profile.firstName && !profile.lastName) {
+      return "";
+    }
+
+    if (profile.firstName && !profile.lastName) {
+      return profile.firstName;
+    }
+
+    if (!profile.firstName && profile.lastName) {
+      return profile.lastName;
+    }
+
+    return `${profile.firstName} ${profile.lastName}`;
+  };
+
   return (
     <>
       <header css={styles.header}>
@@ -20,10 +36,7 @@ export function ProfileContents({
             <img src={profile.photoURL} alt="user pic" />
           )}
         </div>
-        <h3 css={styles.name}>
-          {profile.firstName || ""}
-          {profile.lastName || ""}
-        </h3>
+        <h3 css={styles.name}>{getFullName()}</h3>
         <p css={styles.email}>{profile.email}</p>
       </header>
       {links && (
