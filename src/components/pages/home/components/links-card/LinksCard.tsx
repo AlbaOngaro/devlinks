@@ -2,13 +2,13 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Reorder } from "framer-motion";
 import { useGetLinks } from "hooks/useGetLinks";
 import { useFieldArray } from "react-hook-form";
+import { LinksService } from "services/links";
 import { Link } from "types";
 import { v4 } from "uuid";
 
 import { Button } from "components/button/Button";
 import { Card } from "components/card/Card";
 import { useEditForm } from "components/pages/home/HomePage";
-import { supabase } from "lib/supabase";
 
 import { EmptyState } from "./empty-state/EmptyState";
 import { LinkForm } from "./link-form/LinkForm";
@@ -33,48 +33,43 @@ export function LinksCard() {
 
   const onSubmit = handleSubmit(async ({ links }) => {
     await mutate(async () => {
-      const user = await supabase.auth.getUser().then((res) => res.data.user);
-
-      if (!user) {
-        return [];
+      if (!defaultValues?.links) {
+        return LinksService.read();
       }
 
-      const toBeDeleted = defaultValues?.links?.filter(
-        (link) => !links.some((l) => l.id === link?.id),
+      const defaultLinks = defaultValues.links as Link[];
+
+      const toBeDeleted = defaultLinks.filter(
+        (link) => !links.some((l) => l.id === link.id),
       );
 
-      const toBeCreateOrUpdated = links
-        .filter((link) => !defaultValues?.links?.some((l) => l?.id === link.id))
-        .map((link) => ({
-          id: link.id,
-          uid: user.id,
-          url: link.url,
-          label: link.label,
-          type: link.type,
-          order: link.order,
-        }));
+      const toBeCreated = links.filter(
+        (link) => !defaultLinks.some((l) => l.id === link.id),
+      );
 
-      const [newLinks] = await Promise.all([
-        supabase
-          .from("links")
-          .upsert(toBeCreateOrUpdated)
-          .select()
-          .order("order", { ascending: true })
-          .then((res) => {
-            if (res.error) {
-              console.error(res.error);
-              return [];
-            }
+      const toBeUpdated = defaultLinks
+        .filter(
+          (link) =>
+            !toBeDeleted.some((l) => l.id === link.id) &&
+            !toBeCreated.some((l) => l.id === link.id),
+        )
+        .filter((link) => {
+          const original = defaultLinks.find((l) => l.id === link.id);
 
-            return res.data as Link[];
-          }),
-        supabase
-          .from("links")
-          .delete()
-          .in("id", toBeDeleted?.map((link) => link?.id) || []),
+          if (!original) {
+            return false;
+          }
+
+          return JSON.stringify(link) !== JSON.stringify(original);
+        });
+
+      await Promise.all([
+        LinksService.create(toBeCreated),
+        LinksService.update(toBeUpdated),
+        ...toBeDeleted.map((link) => LinksService.delete(link.id)),
       ]);
 
-      return newLinks;
+      return LinksService.read();
     });
   });
 
@@ -133,10 +128,18 @@ export function LinksCard() {
                 key={link.id}
                 onRemove={() => remove(i)}
                 onUpdate={(newLink) =>
-                  setValue(`links.${i}`, {
-                    ...link,
-                    ...newLink,
-                  })
+                  setValue(
+                    `links.${i}`,
+                    {
+                      ...link,
+                      ...newLink,
+                    },
+                    {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                      shouldValidate: true,
+                    },
+                  )
                 }
                 link={link}
               />

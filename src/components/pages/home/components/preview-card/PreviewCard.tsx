@@ -6,6 +6,7 @@ import * as styles from "./PreviewCard.styles";
 
 export function PreviewCard() {
   const { watch } = useEditForm();
+
   const links = watch("links");
   const profile = watch("profile");
 

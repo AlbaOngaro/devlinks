@@ -56,7 +56,7 @@ interface Props {
 }
 
 export function LinkForm({
-  link: { id, url, type, label },
+  link: { id, url, type, label, order },
   onRemove,
   onUpdate,
 }: Props) {
@@ -77,7 +77,6 @@ export function LinkForm({
         <button
           css={styles.dragBtn}
           onPointerDown={(e) => {
-            console.debug("onPointerDown");
             controls.start(e);
           }}
         >
@@ -92,6 +91,7 @@ export function LinkForm({
               url,
               type,
               label,
+              order,
             })
           }
         >

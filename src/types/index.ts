@@ -15,7 +15,7 @@ export type Platform =
   | "stack-overflow";
 
 export interface Link {
-  id: string | number;
+  id: string;
   type: Platform;
   label: string;
   url: string;
@@ -25,6 +25,6 @@ export interface Link {
 export interface Profile {
   firstName: string;
   lastName: string;
-  photoURL: string | FileList;
+  photoURL: string;
   email: string;
 }

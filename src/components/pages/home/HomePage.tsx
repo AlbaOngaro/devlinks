@@ -40,6 +40,8 @@ export function HomePage({ links, profile }: EditFormValue) {
 
   const { current } = useCurrentTabContext();
 
+  debugger;
+
   const { formState, handleSubmit, reset, ...methods } = useForm<EditFormValue>(
     {
       defaultValues: {
