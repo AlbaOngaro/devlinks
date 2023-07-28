@@ -2,6 +2,7 @@ import { Global, ThemeProvider } from "@emotion/react";
 import * as Toast from "@radix-ui/react-toast";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import nookies from "nookies";
 import { ReactElement, ReactNode, useEffect } from "react";
@@ -80,6 +81,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         revalidateOnReconnect: false,
       }}
     >
+      <Head>
+        <title>Devlinks</title>
+      </Head>
       <ThemeProvider theme={theme}>
         <Toast.Provider>
           <Global styles={globalStyles} />

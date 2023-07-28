@@ -6,6 +6,7 @@ export const card = (theme: Theme) => css`
   @media (${theme.media.l}) {
     display: flex;
     justify-content: center;
+    height: fit-content;
   }
 `;
 
