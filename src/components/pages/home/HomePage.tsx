@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { DiscIcon } from "@radix-ui/react-icons";
 import { AnimatePresence } from "framer-motion";
 import { DefaultLayout } from "layouts/default/DefaultLayout";
@@ -14,6 +15,7 @@ import {
   useForm,
   useFormContext,
 } from "react-hook-form";
+import { schema } from "schema";
 import { SWRConfig } from "swr";
 import { Link, Profile } from "types";
 import { userToProfile } from "utils/userToProfile";
@@ -40,14 +42,13 @@ export function HomePage({ links, profile }: EditFormValue) {
 
   const { current } = useCurrentTabContext();
 
-  debugger;
-
   const { formState, handleSubmit, reset, ...methods } = useForm<EditFormValue>(
     {
       defaultValues: {
         links,
         profile,
       },
+      resolver: zodResolver(schema),
     },
   );
 

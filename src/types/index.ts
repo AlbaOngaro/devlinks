@@ -1,30 +1,12 @@
-export type Platform =
-  | "github"
-  | "frontend-mentor"
-  | "twitter"
-  | "linkedin"
-  | "youtube"
-  | "facebook"
-  | "twitch"
-  | "devto"
-  | "codewars"
-  | "codepen"
-  | "freecodecamp"
-  | "gitlab"
-  | "hashnode"
-  | "stack-overflow";
+import { link } from "schema/link";
+import { platform } from "schema/platform";
+import { profile } from "schema/profile";
+import { z } from "zod";
 
-export interface Link {
-  id: string;
-  type: Platform;
-  label: string;
-  url: string;
-  order: number;
-}
+export type Platform = z.infer<typeof platform>;
 
-export interface Profile {
-  firstName: string;
-  lastName: string;
-  photoURL: string;
-  email: string;
-}
+export type Link = z.infer<typeof link>;
+
+export type Validator = Record<Platform, RegExp>;
+
+export type Profile = z.infer<typeof profile>;

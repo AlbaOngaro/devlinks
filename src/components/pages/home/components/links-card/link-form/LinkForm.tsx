@@ -4,6 +4,7 @@ import { DragHandleDots2Icon, Link1Icon } from "@radix-ui/react-icons";
 import { Reorder, useDragControls } from "framer-motion";
 import Image from "next/image";
 import { FormEvent } from "react";
+import { validator } from "schema/link";
 import { Link, Platform } from "types";
 
 import { Input } from "components/input/Input";
@@ -50,9 +51,9 @@ const PLATFORMS = [
 }));
 
 interface Props {
+  link: Link;
   onRemove: (link: Link) => void;
   onUpdate: (newLink: Partial<Link>) => void;
-  link: Link;
 }
 
 export function LinkForm({
@@ -120,9 +121,10 @@ export function LinkForm({
               url: e.target.value,
             })
           }
+          pattern={validator[type].source}
           validations={{
-            typeMismatch: "Please check the URL",
             valueMissing: "Can’t be empty",
+            patternMismatch: `That does not seem like a valid ${type} url`,
           }}
         />
       </Root>

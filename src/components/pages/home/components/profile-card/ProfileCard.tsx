@@ -1,4 +1,5 @@
 import { Root } from "@radix-ui/react-form";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { AnimatePresence } from "framer-motion";
 import { useGetProfile } from "hooks/useGetProfile";
 import { Controller } from "react-hook-form";
@@ -24,6 +25,7 @@ export function ProfileCard() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty, errors },
     setError,
+    clearErrors,
   } = useEditForm();
 
   const onSubmit = handleSubmit(async (formData) => {
@@ -122,14 +124,14 @@ export function ProfileCard() {
               required
               validations={{ valueMissing: "This field is required!" }}
               placeholder="e.g. John"
-              {...register("profile.firstName", { required: true })}
+              {...register("profile.firstName")}
             />
             <label css={styles.label}>Last name*</label>
             <Input
               required
               validations={{ valueMissing: "This field is required!" }}
               placeholder="e.g. Appleseed"
-              {...register("profile.lastName", { required: true })}
+              {...register("profile.lastName")}
             />
             <label css={styles.label}>Email</label>
             <Input
@@ -153,11 +155,20 @@ export function ProfileCard() {
           </Button>
         </footer>
       </Card>
-      <AnimatePresence>
-        {errors.profile?.photoURL?.message && (
-          <Toast title="Image is too big!" duration={2000} />
-        )}
-      </AnimatePresence>
+
+      {errors.profile?.photoURL?.message && (
+        <AnimatePresence>
+          <Toast
+            title={
+              <>
+                <ExclamationTriangleIcon /> Image is too big!
+              </>
+            }
+            duration={2000}
+            onOpenChange={() => clearErrors("profile.photoURL")}
+          />
+        </AnimatePresence>
+      )}
     </>
   );
 }
