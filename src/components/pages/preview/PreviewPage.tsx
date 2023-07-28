@@ -28,7 +28,7 @@ export function PreviewPage({ links, profile }: Props) {
   return (
     <>
       <section css={styles.container}>
-        <Header>
+        <Header css={styles.header}>
           <Button
             css={styles.button}
             onClick={() => router.push("/")}

@@ -1,7 +1,12 @@
-import { css } from "@emotion/react";
+import { css, Theme } from "@emotion/react";
 
-export const card = css`
-  justify-content: center;
+export const card = (theme: Theme) => css`
+  display: none;
+
+  @media (${theme.media.l}) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const phone = css`

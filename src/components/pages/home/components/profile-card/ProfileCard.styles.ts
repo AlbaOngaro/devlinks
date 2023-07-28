@@ -1,7 +1,12 @@
 import { css, Theme } from "@emotion/react";
 
-export const container = css`
+export const container = (theme: Theme) => css`
   padding: 0;
+  margin: 0 24px 24px;
+
+  @media (${theme.media.md}) {
+    margin: 0;
+  }
 `;
 
 export const header = css`
@@ -30,13 +35,16 @@ export const label = (theme: Theme) => css`
 
 export const item = (theme: Theme) => css`
   display: grid;
-  grid-template-columns: 240px 1fr;
   grid-row-gap: 16px;
   align-items: center;
   background-color: ${theme.colors.lightGray};
   padding: 20px;
   border-radius: 12px;
   width: 100%;
+
+  @media (${theme.media.md}) {
+    grid-template-columns: 240px 1fr;
+  }
 `;
 
 export const footer = (theme: Theme) => css`

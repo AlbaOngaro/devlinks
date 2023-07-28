@@ -2,8 +2,7 @@ import { css, Theme } from "@emotion/react";
 
 export const label = (theme: Theme) => css`
   display: grid;
-  grid-template-columns: 193px 1fr;
-  grid-column-gap: 24px;
+  grid-gap: 24px;
   align-items: center;
   cursor: pointer;
   font-family: Instrument Sans;
@@ -12,6 +11,10 @@ export const label = (theme: Theme) => css`
   font-weight: 400;
   line-height: 150%;
   color: ${theme.colors.gray};
+
+  @media (${theme.media.md}) {
+    grid-template-columns: 193px 1fr;
+  }
 `;
 
 export const input = css`

@@ -1,4 +1,5 @@
-import { Link1Icon, PersonIcon } from "@radix-ui/react-icons";
+import { useTheme } from "@emotion/react";
+import { EyeOpenIcon, Link1Icon, PersonIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import {
@@ -40,18 +41,21 @@ function ProfileButton() {
 }
 
 export function DefaultLayout({ children }: PropsWithChildren) {
+  const theme = useTheme();
   const router = useRouter();
 
   return (
     <CurrentTabProvider>
       <section css={styles.container}>
         <Header>
-          <Image
-            src="/images/logo-devlinks-large.svg"
-            height={32}
-            width={146}
-            alt="logo"
-          />
+          <picture css={styles.logo}>
+            <source
+              media={`(${theme.media.md})`}
+              srcSet="/images/logo-devlinks-large.svg"
+            />
+
+            <Image src="/images/logo-devlinks-small.svg" alt="logo" fill />
+          </picture>
 
           <div css={styles.tabButtons}>
             <LinksButton />
@@ -63,7 +67,7 @@ export function DefaultLayout({ children }: PropsWithChildren) {
             variant="secondary"
             onClick={() => router.push("/preview")}
           >
-            Preview
+            <EyeOpenIcon /> Preview
           </Button>
         </Header>
         {children}

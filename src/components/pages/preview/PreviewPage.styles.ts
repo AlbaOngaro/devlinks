@@ -5,20 +5,23 @@ export const container = (theme: Theme) => css`
   grid-template-columns: repeat(2, minmax(0, 2fr));
   grid-template-rows: min-content 1fr;
   grid-row-gap: 40px;
-  padding: 24px;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   position: relative;
 
-  &::before {
-    content: "";
-    height: min(40%, 357px);
-    background-color: ${theme.colors.purple};
-    z-index: 0;
-    top: 0;
-    width: 100%;
-    position: absolute;
-    border-radius: 0px 0px 32px 32px;
+  @media (${theme.media.md}) {
+    padding: 24px;
+
+    &::before {
+      content: "";
+      height: min(40%, 357px);
+      background-color: ${theme.colors.purple};
+      z-index: 0;
+      top: 0;
+      width: 100%;
+      position: absolute;
+      border-radius: 0px 0px 32px 32px;
+    }
   }
 
   & > * {
@@ -26,8 +29,22 @@ export const container = (theme: Theme) => css`
   }
 `;
 
-export const button = css`
-  width: fit-content;
+export const header = (theme: Theme) => css`
+  gap: 16px;
+  background-color: transparent;
+
+  @media (${theme.media.md}) {
+    background-color: ${theme.colors.white};
+  }
+`;
+
+export const button = (theme: Theme) => css`
+  white-space: nowrap;
+  width: 100%;
+
+  @media (${theme.media.md}) {
+    width: fit-content;
+  }
 `;
 
 export const card = (theme: Theme) => css`
@@ -39,7 +56,14 @@ export const card = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  align-self: self-start;
+
+  @media (${theme.media.md}) {
+    align-self: center;
+    background-color: ${theme.colors.white};
+    box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.1);
+  }
 
   & div:has(> img) {
     width: 104px;

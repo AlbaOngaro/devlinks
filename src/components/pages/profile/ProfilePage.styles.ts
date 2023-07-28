@@ -1,7 +1,7 @@
 import { css, Theme } from "@emotion/react";
 
 export const container = (theme: Theme) => css`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
 

@@ -5,12 +5,9 @@ import * as styles from "../LinksCard.styles";
 export function EmptyState() {
   return (
     <article css={(theme) => styles.item(theme, true)}>
-      <Image
-        src="/images/illustration-empty.svg"
-        width={250}
-        height={130}
-        alt="empty"
-      />
+      <picture css={styles.picture}>
+        <Image src="/images/illustration-empty.svg" alt="empty" fill />
+      </picture>
       <h1 css={styles.emptyTitle}>Let’s get you started</h1>
       <p css={styles.emptyBody}>
         Use the “Add new link” button to get started. Once you have more than

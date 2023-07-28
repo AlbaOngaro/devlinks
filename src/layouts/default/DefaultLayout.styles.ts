@@ -1,13 +1,30 @@
 import { css, Theme } from "@emotion/react";
 
-export const container = css`
+export const container = (theme: Theme) => css`
   width: 100vw;
-  height: 100vh;
-  padding: 24px;
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: min-content 1fr;
   grid-gap: 24px;
+
+  @media (${theme.media.md}) {
+    padding: 24px;
+  }
+
+  @media (${theme.media.l}) {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: min-content 1fr;
+  }
+`;
+
+export const logo = (theme: Theme) => css`
+  position: relative;
+  width: 32px;
+  height: 32px;
+
+  @media (${theme.media.md}) {
+    height: 32px;
+    width: 146px;
+  }
 `;
 
 export const tabButtons = css`
@@ -19,17 +36,25 @@ export const tabButtons = css`
 export const tabButton = (theme: Theme, isActive: boolean) => [
   css`
     display: flex;
-    padding: 11px 27px;
     align-items: center;
-    gap: 8px;
     border-radius: 8px;
-    font-family: Instrument Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 150%;
+    font-size: 0;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    padding: 11px 27px;
+
+    & svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (${theme.media.md}) {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 150%;
+      gap: 8px;
+    }
 
     &:hover {
       color: ${theme.colors.purple};
@@ -46,6 +71,18 @@ export const tabButton = (theme: Theme, isActive: boolean) => [
     `,
 ];
 
-export const preview = css`
+export const preview = (theme: Theme) => css`
+  font-size: 0;
   width: fit-content;
+  padding: 11px 16px;
+  gap: 0;
+
+  @media (${theme.media.md}) {
+    font-size: initial;
+    padding: 11px 27px;
+
+    & svg {
+      display: none;
+    }
+  }
 `;

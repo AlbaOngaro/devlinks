@@ -1,8 +1,14 @@
 import { css, Theme } from "@emotion/react";
 
-export const container = css`
+export const container = (theme: Theme) => css`
   padding: 0;
+  margin: 0 24px 24px;
+
+  @media (${theme.media.md}) {
+    margin: 0;
+  }
 `;
+
 export const header = css`
   padding: 40px 40px 24px;
   width: 100%;
@@ -24,7 +30,6 @@ export const content = (theme: Theme, isEmpty: boolean) => css`
 
 export const item = (theme: Theme, fullHeight: boolean) => css`
   background-color: ${theme.colors.lightGray};
-  padding: 20px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -32,6 +37,13 @@ export const item = (theme: Theme, fullHeight: boolean) => css`
   align-items: center;
   height: ${fullHeight ? "100%" : "auto"};
   width: 100%;
+`;
+
+export const picture = css`
+  position: relative;
+  width: min(250px, 100%);
+  height: 100%;
+  aspect-ratio: 16/9;
 `;
 
 export const linksWrapper = css`
@@ -47,7 +59,7 @@ export const linksWrapper = css`
 `;
 
 export const emptyTitle = css`
-  margin: 40px 0 24px;
+  margin: 24px 0;
   text-align: center;
 `;
 
@@ -71,7 +83,9 @@ export const footer = (theme: Theme) => css`
   margin-top: auto;
 
   & button {
-    width: fit-content;
-    margin-left: auto;
+    @media (${theme.media.l}) {
+      width: fit-content;
+      margin-left: auto;
+    }
   }
 `;

@@ -13,6 +13,12 @@ declare module "@emotion/react" {
       white: string;
       red: string;
     };
+    media: {
+      sm: string;
+      md: string;
+      l: string;
+      xl: string;
+    };
   }
 }
 
@@ -27,5 +33,11 @@ export const theme: Theme = {
     lightGray: "#fafafa",
     white: "#fff",
     red: "#ff3939",
+  },
+  media: {
+    sm: "min-width: 0px",
+    md: "min-width: 768px",
+    l: "min-width: 1024px",
+    xl: "min-width: 1440px",
   },
 };
